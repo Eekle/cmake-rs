@@ -12,6 +12,19 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
 
+include(FetchContent)
+
+FetchContent_Declare(
+    Corrosion
+    GIT_REPOSITORY https://github.com/corrosion-rs/corrosion.git
+    GIT_TAG v0.5 # Optionally specify a commit hash, version tag or branch here
+)
+
+set(Rust_CARGO_TARGET thumbv7em-none-eabihf)
+
+FetchContent_MakeAvailable(Corrosion)
+
+
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
@@ -36,6 +49,8 @@ add_executable(${CMAKE_PROJECT_NAME})
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
+
+add_subdirectory(rust)
 
 # Link directories setup
 target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -65,4 +80,5 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
 
     # Add user defined libraries
+    hello_rs
 )

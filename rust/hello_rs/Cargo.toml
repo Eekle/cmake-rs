@@ -1,0 +1,16 @@
+[package]
+name = "hello_rs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+bindings = { path = "../bindings" }
+
+[lib]
+crate-type = ["staticlib"]
+path = "hello_rs.rs"
+
+[profile.dev]
+panic = "abort"
+[profile.release]
+panic = "abort"
